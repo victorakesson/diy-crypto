@@ -4,7 +4,7 @@ const secretMessage = "BACKOFF"
 
 console.log(secretMessage)
 
-function caesarEncrypt(msg) {
+function caesarEncrypt(msg, shift) {
     // översätt varje tecken
     const charCodes = []
     for (let i = 0; i < msg.length; i++) {
@@ -14,7 +14,7 @@ function caesarEncrypt(msg) {
     }
     // shifta numret
     for (let i = 0; i < charCodes.length; i++) {
-        charCodes[i] = charCodes[i] + 1
+        charCodes[i] = charCodes[i] + shift
 
     }
 
@@ -31,8 +31,32 @@ function caesarEncrypt(msg) {
 
 }
 
+function caesarDecrypt(encryptedMsg, shift) {
+    const charCodes = []
+    for (let i = 0; i < encryptedMsg.length; i++) {
+        charCodes.push(encryptedMsg[i].charCodeAt(0))
+
+    }
 
 
-const encryptedMessage = caesarEncrypt(secretMessage)
+    // 2. shifta det numret
+    for (let i = 0; i < charCodes.length; i++) {
+        charCodes[i] = charCodes[i] - shift
+    }
 
-console.log(secretMessage,encryptedMessage)
+    let result = ""
+
+    for (let i = 0; i < charCodes.length; i++) {
+        result = result + String.fromCharCode(charCodes[i])
+
+    }
+
+    return result
+}
+
+
+
+const encryptedMessage = caesarEncrypt(secretMessage, 4)
+const decryptedMessage = caesarDecrypt(encryptedMessage, 4)
+
+console.log(secretMessage, encryptedMessage, decryptedMessage)
